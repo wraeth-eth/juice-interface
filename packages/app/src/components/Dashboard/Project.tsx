@@ -8,6 +8,7 @@ import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
 import BalanceTimeline from './BalanceTimeline'
 import FundingCycles from './FundingCycles'
+import LPStakingRewards from './LPStakingRewards'
 import Paid from './Paid'
 import Pay from './Pay'
 import PrintPremined from './PrintPremined'
@@ -91,6 +92,7 @@ export default function Project({
           </div>
 
           <FundingCycles showCurrentDetail={showCurrentDetail} />
+          <LPStakingRewards marginTop={gutter}/>
         </Col>
 
         <Col xs={24} md={12} style={{ marginTop: gutter }}>
