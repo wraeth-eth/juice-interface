@@ -3,13 +3,15 @@ import EtherscanLink from 'components/shared/EtherscanLink'
 import FormattedAddress from 'components/shared/FormattedAddress'
 import ProjectHandle from 'components/shared/ProjectHandle'
 import { ThemeContext } from 'contexts/themeContext'
+import useSubgraphQuery from 'hooks/SubgraphQuery'
+import { parseDistributeToPayoutModEvent } from 'models/subgraph-entities/distribute-to-payout-mod-event copy'
 import { TapEvent } from 'models/subgraph-entities/tap-event'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { formatHistoricalDate } from 'utils/formatDate'
 import { formatWad } from 'utils/formatNumber'
+import { querySubgraph } from 'utils/graph'
 
 import { smallHeaderStyle } from '../styles'
-import useSubgraphQuery from '../../../hooks/SubgraphQuery'
 
 export default function TapEventElem({
   tapEvent,
@@ -32,13 +34,44 @@ export default function TapEventElem({
     ],
     orderDirection: 'desc',
     orderBy: 'modCut',
-    where: tapEvent?.id
-      ? {
-          key: 'tapEvent',
-          value: tapEvent.id,
-        }
-      : undefined,
+    where: {
+      key: 'tapEvent',
+      value: tapEvent?.id ?? '',
+    },
   })
+
+  useEffect(() => {
+    querySubgraph(
+      {
+        entity: 'distributeToPayoutModEvent',
+        keys: [
+          'timestamp',
+          'txHash',
+          'modProjectId',
+          'modBeneficiary',
+          'modCut',
+        ],
+        orderDirection: 'desc',
+        orderBy: 'modCut',
+        where: tapEvent?.id
+          ? {
+              key: 'tapEvent',
+              value: tapEvent.id,
+            }
+          : undefined,
+      },
+      res => {
+        if (!res) return
+
+        console.log(
+          'TEST distributeToPayoutModEvents query:',
+          res.distributeToPayoutModEvents.map(e =>
+            parseDistributeToPayoutModEvent(e),
+          ),
+        )
+      },
+    )
+  }, [tapEvent])
 
   if (!tapEvent) return null
 
