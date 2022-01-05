@@ -1,9 +1,9 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
-import { Button, Col, DatePicker, Form, Modal, Row, Space } from 'antd'
+import { Button, Col, Form, Modal, Row, Space } from 'antd'
+import DatePicker from 'components/shared/DatePicker'
 import { useForm } from 'antd/lib/form/Form'
 import { ThemeContext } from 'contexts/themeContext'
 import { TicketMod } from 'models/mods'
-import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import { fromPermyriad, parsePermyriad } from 'utils/formatNumber'
@@ -33,7 +33,7 @@ export default function ProjectTicketMods({
   const [form] = useForm<{
     beneficiary: string
     percent: number
-    lockedUntil: moment.Moment
+    lockedUntil: Date
   }>()
   const [editingModIndex, setEditingModIndex] = useState<number>() // index of the mod currently being edited (edit modal open)
   const [modalMode, setModalMode] = useState<ModalMode>() //either 'Add', 'Edit' or undefined
@@ -77,7 +77,7 @@ export default function ProjectTicketMods({
                 ...mod,
                 percent,
                 lockedUntil: mod.lockedUntil
-                  ? moment.default(mod.lockedUntil * 1000)
+                  ? new Date(mod.lockedUntil * 1000)
                   : undefined,
               })
               setEditingModIndex(index)
@@ -135,7 +135,7 @@ export default function ProjectTicketMods({
                   <label>Locked</label>
                 </Col>
                 <Col span={19}>
-                  until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
+                  until {formatDate(mod.lockedUntil * 1000, 'mm-dd-yyyy')}
                 </Col>
               </Row>
             ) : null}
@@ -183,7 +183,7 @@ export default function ProjectTicketMods({
 
     const beneficiary = form.getFieldValue('beneficiary')
     const percent = parsePermyriad(form.getFieldValue('percent')).toNumber()
-    const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
+    const _lockedUntil = form.getFieldValue('lockedUntil') as Date
 
     const lockedUntil = _lockedUntil
       ? Math.round(_lockedUntil.valueOf() / 1000)

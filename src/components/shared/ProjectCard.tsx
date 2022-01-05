@@ -76,7 +76,7 @@ export default function ProjectCard({
               </span>
               since{' '}
               {!!project.createdAt &&
-                formatDate(project.createdAt * 1000, 'MM-DD-YY')}
+                formatDate(project.createdAt * 1000, 'mm-dd-yy')}
             </div>
 
             {metadata.description && (

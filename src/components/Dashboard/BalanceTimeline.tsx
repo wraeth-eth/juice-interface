@@ -3,10 +3,11 @@ import CurrencySymbol from 'components/shared/CurrencySymbol'
 
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
-import EthDater from 'ethereum-block-by-date'
+// import EthDater from 'ethereum-block-by-date'
 import { parseProjectJson, Project } from 'models/subgraph-entities/project'
 import { parseTapEventJson } from 'models/subgraph-entities/tap-event'
-import moment from 'moment'
+import format from 'date-fns/format'
+
 import {
   CSSProperties,
   SVGProps,
@@ -27,11 +28,11 @@ import {
 import { fromWad } from 'utils/formatNumber'
 import { querySubgraph } from 'utils/graph'
 
-import { readProvider } from 'constants/readProvider'
+// import { readProvider } from 'constants/readProvider'
 
 import SectionHeader from './SectionHeader'
 
-const now = moment.now() - 5 * 60 * 1000 // 5 min ago
+const now = Date.now() - 5 * 60 * 1000 // 5 min ago
 
 const daysToMillis = (days: number) => days * 24 * 60 * 60 * 1000
 
@@ -47,7 +48,7 @@ type ShowGraph = 'volume' | 'balance'
 
 export default function BalanceTimeline({ height }: { height: number }) {
   const [events, setEvents] = useState<EventRef[]>([])
-  const [blockRefs, setBlockRefs] = useState<BlockRef[]>([])
+  const [blockRefs] = useState<BlockRef[]>([])
   const [loading, setLoading] = useState<boolean>()
   const [domain, setDomain] = useState<[number, number]>()
   const [duration, setDuration] = useState<Duration>()
@@ -57,9 +58,9 @@ export default function BalanceTimeline({ height }: { height: number }) {
     theme: { colors },
   } = useContext(ThemeContext)
 
-  const dateStringForBlockTime = (timestamp: number) =>
+  const dateStringForBlockTime = (timestamp: number): string | undefined =>
     duration
-      ? moment(timestamp * 1000).format(duration > 1 ? 'M/DD' : 'h:mma')
+      ? format(timestamp * 1000, duration > 1 ? 'M/dd' : 'h:mma')
       : undefined
 
   useEffect(() => {
@@ -83,40 +84,40 @@ export default function BalanceTimeline({ height }: { height: number }) {
     setDomain(undefined)
 
     // Get number of most recent block, and block at start of duration window
-    new EthDater(readProvider)
-      .getEvery(
-        'days',
-        //TODO + 0.1 fixes bug where only one block is returned. Needs better fix
-        moment(now - daysToMillis(duration + 0.1)).toISOString(),
-        moment(now).toISOString(),
-        duration,
-        false,
-      )
-      .then((res: (BlockRef & { block: number })[]) => {
-        const newBlockRefs: BlockRef[] = []
-        const blocksCount = 40
+    // new EthDater(readProvider)
+    //   .getEvery(
+    //     'days',
+    //     //TODO + 0.1 fixes bug where only one block is returned. Needs better fix
+    //     new Date(now - daysToMillis(duration + 0.1)).toISOString(),
+    //     new Date(now).toISOString(),
+    //     duration,
+    //     false,
+    //   )
+    //   .then((res: (BlockRef & { block: number })[]) => {
+    //     const newBlockRefs: BlockRef[] = []
+    //     const blocksCount = 40
 
-        // Calculate intermediate block numbers at consistent intervals
-        for (let i = 0; i < blocksCount; i++) {
-          newBlockRefs.push({
-            block: Math.round(
-              ((res[1].block - res[0].block) / blocksCount) * i + res[0].block,
-            ),
-            timestamp: Math.round(
-              ((res[1].timestamp - res[0].timestamp) / blocksCount) * i +
-                res[0].timestamp,
-            ),
-          })
-        }
+    //     // Calculate intermediate block numbers at consistent intervals
+    //     for (let i = 0; i < blocksCount; i++) {
+    //       newBlockRefs.push({
+    //         block: Math.round(
+    //           ((res[1].block - res[0].block) / blocksCount) * i + res[0].block,
+    //         ),
+    //         timestamp: Math.round(
+    //           ((res[1].timestamp - res[0].timestamp) / blocksCount) * i +
+    //             res[0].timestamp,
+    //         ),
+    //       })
+    //     }
 
-        // Push blockRef for "now"
-        newBlockRefs.push({
-          block: null,
-          timestamp: Math.round(now.valueOf() / 1000),
-        })
+    //     // Push blockRef for "now"
+    //     newBlockRefs.push({
+    //       block: null,
+    //       timestamp: Math.round(now.valueOf() / 1000),
+    //     })
 
-        setBlockRefs(newBlockRefs)
-      })
+    //     setBlockRefs(newBlockRefs)
+    //   })
   }, [duration])
 
   useEffect(() => {

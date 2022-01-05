@@ -1,5 +1,6 @@
 import { CloseCircleOutlined, LockOutlined } from '@ant-design/icons'
-import { Button, Col, DatePicker, Form, Modal, Row, Select, Space } from 'antd'
+import { Button, Col, Form, Modal, Row, Select, Space } from 'antd'
+import DatePicker from 'components/shared/DatePicker'
 import { useForm } from 'antd/lib/form/Form'
 import { ProjectContext } from 'contexts/projectContext'
 import { ThemeContext } from 'contexts/themeContext'
@@ -8,7 +9,6 @@ import useContractReader from 'hooks/ContractReader'
 import { ContractName } from 'models/contract-name'
 import { CurrencyOption } from 'models/currency-option'
 import { PayoutMod } from 'models/mods'
-import * as moment from 'moment'
 import { useCallback, useContext, useState } from 'react'
 import { formatDate } from 'utils/formatDate'
 import {
@@ -53,7 +53,7 @@ export default function ProjectPayoutMods({
     handle: string
     beneficiary: string
     percent: number
-    lockedUntil: moment.Moment
+    lockedUntil: Date
   }>()
   const [modalMode, setModalMode] = useState<ModalMode>() //either 'Add', 'Edit' or undefined
   const [editingModProjectId, setEditingModProjectId] = useState<BigNumber>()
@@ -132,7 +132,7 @@ export default function ProjectPayoutMods({
                 ...mod,
                 percent,
                 lockedUntil: mod.lockedUntil
-                  ? moment.default(mod.lockedUntil * 1000)
+                  ? new Date(mod.lockedUntil * 1000)
                   : undefined,
               })
               setModalMode('Edit')
@@ -239,7 +239,7 @@ export default function ProjectPayoutMods({
                   <label>Locked</label>
                 </Col>
                 <Col span={19}>
-                  until {formatDate(mod.lockedUntil * 1000, 'MM-DD-yyyy')}
+                  until {formatDate(mod.lockedUntil * 1000, 'mm-dd-yyyy')}
                 </Col>
               </Row>
             ) : null}
@@ -291,7 +291,7 @@ export default function ProjectPayoutMods({
     const handle = form.getFieldValue('handle')
     const beneficiary = form.getFieldValue('beneficiary')
     const percent = parsePermyriad(form.getFieldValue('percent')).toNumber()
-    const _lockedUntil = form.getFieldValue('lockedUntil') as moment.Moment
+    const _lockedUntil = form.getFieldValue('lockedUntil') as Date
 
     const lockedUntil = _lockedUntil
       ? Math.round(_lockedUntil.valueOf() / 1000)
