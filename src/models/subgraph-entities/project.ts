@@ -5,6 +5,7 @@ import { NetworkName } from 'models/network-name'
 
 import { Participant } from './participant'
 import { readNetwork } from 'constants/networks'
+import { parseParticipantJson } from 'models/subgraph-entities/participant'
 
 export interface Project {
   createdAt?: number
@@ -38,14 +39,5 @@ export const parseProjectJson = (project: ProjectJson): Project => ({
     ? BigNumber.from(project.totalRedeemed)
     : undefined,
   participants:
-    project.participants?.map(p => {
-      const payer: Record<keyof Participant, string> = JSON.parse(p)
-      return {
-        ...payer,
-        totalPaid: BigNumber.from(payer.totalPaid),
-        project: BigNumber.from(payer.project),
-        lastPaidTimestamp: parseInt(payer.lastPaidTimestamp),
-        tokenBalance: BigNumber.from(payer.tokenBalance),
-      }
-    }) ?? [],
+    project.participants?.map(p => parseParticipantJson(JSON.parse(p))) ?? [],
 })
