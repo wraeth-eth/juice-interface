@@ -318,21 +318,19 @@ export default function ProjectTicketMods({
             if (e.key === 'Enter') setReceiver()
           }}
         >
-          <FormItems.EthAddress
+          <FormItems.ETHAddressFormItem
             name="beneficiary"
-            defaultValue={form.getFieldValue('beneficiary')}
+            initialValue={form.getFieldValue('beneficiary')}
             formItemProps={{
               label: 'Beneficiary',
               extra: 'The address that should receive the tokens.',
               rules: [
+                { required: true },
                 {
                   validator: validateReservedTokenReceiver,
                 },
               ],
             }}
-            onAddressChange={beneficiary =>
-              form.setFieldsValue({ beneficiary })
-            }
           />
 
           <Form.Item label="Percent" rules={[{ required: true }]}>
@@ -341,7 +339,7 @@ export default function ProjectTicketMods({
                 form.setFieldsValue({ percent })
               }
               step={0.01}
-              defaultValue={form.getFieldValue('percent') || 0}
+              // defaultValue={form.getFieldValue('percent') || 0}
               suffix="%"
               name="percent"
               formItemProps={{

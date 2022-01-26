@@ -445,9 +445,9 @@ export default function ProjectPayoutMods({
           </Form.Item>
 
           {editingModType === 'address' ? (
-            <FormItems.EthAddress
+            <FormItems.ETHAddressFormItem
               name="beneficiary"
-              defaultValue={form.getFieldValue('beneficiary')}
+              initialValue={form.getFieldValue('beneficiary')}
               formItemProps={{
                 label: 'Address',
                 rules: [
@@ -472,9 +472,9 @@ export default function ProjectPayoutMods({
             />
           )}
           {editingModType === 'project' ? (
-            <FormItems.EthAddress
+            <FormItems.ETHAddressFormItem
               name="beneficiary"
-              defaultValue={form.getFieldValue('beneficiary')}
+              initialValue={form.getFieldValue('beneficiary')}
               formItemProps={{
                 label: t`Address`,
                 extra: t`The address that should receive the tokens minted from paying this project.`,

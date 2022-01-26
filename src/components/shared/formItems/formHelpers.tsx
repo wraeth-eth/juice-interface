@@ -47,8 +47,8 @@ export function validateEthAddress(
     address === mods[editingModIndex ?? 0]?.beneficiary
   )
     return Promise.resolve()
-  else if (!address || !utils.isAddress(address))
-    return Promise.reject('Address is required')
+  else if (!utils.isAddress(address))
+    return Promise.reject('Address must be a valid ETH address.')
   else if (address === constants.AddressZero)
     return Promise.reject('Cannot use zero address')
   else if (mods.some(mod => mod.beneficiary === address))

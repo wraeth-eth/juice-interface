@@ -131,8 +131,8 @@ export default function ProjectToolDrawerModal({
             wrapperCol={{ span: 20 }}
           >
             <Form.Item name="to" label="To">
-              <FormItems.EthAddress
-                defaultValue={undefined}
+              <FormItems.ETHAddressFormItem
+                initialValue={undefined}
                 onAddressChange={to =>
                   transferTokensForm.setFieldsValue({ to })
                 }
@@ -188,8 +188,8 @@ export default function ProjectToolDrawerModal({
               />
             </Form.Item>
             <Form.Item name="to" label="To">
-              <FormItems.EthAddress
-                defaultValue={undefined}
+              <FormItems.ETHAddressFormItem
+                initialValue={undefined}
                 onAddressChange={to =>
                   transferTokensForm.setFieldsValue({ to })
                 }

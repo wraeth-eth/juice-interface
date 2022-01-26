@@ -1,4 +1,4 @@
-import EthAddress from './EthAddress'
+import ETHAddressFormItem from './ETHAddress/ETHAddressFormItem'
 import ProjectBondingCurveRate from './ProjectBondingCurveRate'
 import ProjectDescription from './ProjectDescription'
 import ProjectDiscord from './ProjectDiscord'
@@ -18,7 +18,7 @@ import ProjectTwitter from './ProjectTwitter'
 import TokenRefs from './TokenRefs'
 
 export const FormItems = {
-  EthAddress,
+  ETHAddressFormItem,
   ProjectBondingCurveRate,
   ProjectDescription,
   ProjectDiscord,
