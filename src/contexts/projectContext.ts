@@ -4,7 +4,7 @@ import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { ProjectType } from 'models/project-type'
 import { TerminalName } from 'models/terminal-name'
-import { TerminalVersion } from 'models/terminal-version'
+import { JuiceboxV1TerminalVersion } from 'models/terminal-version'
 import { createContext } from 'react'
 
 export type ProjectContextType = {
@@ -30,7 +30,7 @@ export type ProjectContextType = {
   isArchived: boolean | undefined
   terminal:
     | {
-        version: TerminalVersion | undefined
+        version: JuiceboxV1TerminalVersion | undefined
         address: string | undefined
         name: TerminalName | undefined
       }

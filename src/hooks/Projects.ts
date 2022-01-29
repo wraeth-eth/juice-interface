@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ProjectState } from 'models/project-visibility'
 import { Project } from 'models/subgraph-entities/project'
-import { TerminalVersion } from 'models/terminal-version'
+import { JuiceboxV1TerminalVersion } from 'models/terminal-version'
 import { EntityKeys, GraphQueryOpts, InfiniteGraphQueryOpts } from 'utils/graph'
 import { getTerminalAddress } from 'utils/terminal-versions'
 
@@ -40,7 +40,7 @@ interface ProjectsOptions {
   pageSize?: number
   filter?: ProjectState
   keys?: (keyof Project)[]
-  terminalVersion?: TerminalVersion
+  terminalVersion?: JuiceboxV1TerminalVersion
   searchText?: string
 }
 

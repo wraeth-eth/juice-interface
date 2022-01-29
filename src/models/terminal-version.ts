@@ -1,1 +1,1 @@
-export type TerminalVersion = '1' | '1.1'
+export type JuiceboxV1TerminalVersion = '1' | '1.1'

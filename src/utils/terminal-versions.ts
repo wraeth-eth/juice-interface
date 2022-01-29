@@ -1,6 +1,6 @@
 import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { NetworkName } from 'models/network-name'
-import { TerminalVersion } from 'models/terminal-version'
+import { JuiceboxV1TerminalVersion } from 'models/terminal-version'
 
 import { TerminalName } from 'models/terminal-name'
 
@@ -14,7 +14,7 @@ const loadTerminalAddress = (
     .address
 
 export const getTerminalAddress = (
-  version?: TerminalVersion,
+  version?: JuiceboxV1TerminalVersion,
 ): string | undefined => {
   if (!version) return
   const contractName = getTerminalName({ version })
@@ -23,7 +23,7 @@ export const getTerminalAddress = (
 
 export const getTerminalVersion = (
   address?: string,
-): TerminalVersion | undefined => {
+): JuiceboxV1TerminalVersion | undefined => {
   if (!address) return
 
   if (
@@ -51,7 +51,7 @@ export const getTerminalName = ({
   version,
   address,
 }: {
-  version?: TerminalVersion
+  version?: JuiceboxV1TerminalVersion
   address?: string
 }): TerminalName | undefined => {
   if (!version && !address) return
