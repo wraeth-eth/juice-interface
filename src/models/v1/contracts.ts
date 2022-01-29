@@ -1,4 +1,13 @@
-import { Contract } from '@ethersproject/contracts'
+// import { Contract } from '@ethersproject/contracts'
+
+import type {
+  OperatorStore,
+  // OperatorStoreInterface,
+} from '../../../types/contracts/mainnet/OperatorStore'
+import type {
+  Projects,
+  // ProjectsInterface,
+} from '../../../types/contracts/mainnet/Projects'
 
 export enum JuiceboxV1ContractName {
   FundingCycles = 'FundingCycles',
@@ -12,4 +21,9 @@ export enum JuiceboxV1ContractName {
   TicketBooth = 'TicketBooth',
 }
 
-export type JuiceboxV1Contracts = Record<JuiceboxV1ContractName, Contract>
+type JuiceboxV1Contract = OperatorStore | Projects
+
+export type JuiceboxV1Contracts = Record<
+  JuiceboxV1ContractName,
+  JuiceboxV1Contract
+>

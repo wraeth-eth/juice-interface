@@ -56,8 +56,11 @@
     "prepare": "husky install",
     "i18n:extract": "lingui extract --clean --locale en",
     "i18n:compile": "yarn i18n:extract && lingui compile",
-    "postinstall": "yarn i18n:compile",
-    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'"
+    "analyze": "yarn build && source-map-explorer 'build/static/js/*.js'",
+    "generate-types:v1:mainnet": "typechain --target=ethers-v5 './node_modules/@jbx-protocol/contracts-v1/deployments/mainnet/*.json' --out-dir=types/contracts/mainnet",
+    "generate-types:v1:rinkeby": "typechain --target=ethers-v5 './node_modules/@jbx-protocol/contracts-v1/deployments/rinkeby/*.json' --out-dir=types/contracts/rinkeby",
+    "generate-types:v1": "yarn generate-types:v1:mainnet && yarn generate-types:v1:rinkeby",
+    "postinstall": "yarn generate-types"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css}": [
@@ -80,6 +83,7 @@
   "devDependencies": {
     "@lingui/cli": "^3.13.0",
     "@lingui/macro": "^3.13.0",
+    "@typechain/ethers-v5": "^9.0.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^17",
@@ -91,6 +95,7 @@
     "less": "^4.1.1",
     "lint-staged": "^12.1.1",
     "prettier": "2.4.1",
-    "source-map-explorer": "^2.5.2"
+    "source-map-explorer": "^2.5.2",
+    "typechain": "^7.0.0"
   }
 }
