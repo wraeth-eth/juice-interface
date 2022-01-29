@@ -1,6 +1,6 @@
 import { BigNumber, BigNumberish } from 'ethers'
 import { JuiceboxV1ContractName } from 'models/v1/contracts'
-import { TerminalName } from 'models/terminal-name'
+import { JuiceboxV1TerminalName } from 'models/v1/terminals'
 import { bigNumbersDiff } from 'utils/bigNumbersDiff'
 
 import useContractReader from './ContractReader'
@@ -10,7 +10,7 @@ import useShouldUpdateTokens from './ShouldUpdateTokens'
 export default function useTotalBalanceOf(
   userAddress: string | undefined,
   projectId: BigNumberish | undefined,
-  terminalName: TerminalName | undefined,
+  terminalName: JuiceboxV1TerminalName | undefined,
 ) {
   return useContractReader<BigNumber>({
     contract: JuiceboxV1ContractName.TicketBooth,

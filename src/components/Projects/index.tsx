@@ -9,7 +9,7 @@ import ProjectsGrid from 'components/shared/ProjectsGrid'
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
 import { ProjectState } from 'models/project-visibility'
-import { JuiceboxV1TerminalVersion } from 'models/terminal-version'
+import { JuiceboxV1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 import { layouts } from 'constants/styles/layouts'

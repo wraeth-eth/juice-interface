@@ -1,7 +1,7 @@
 import { BigNumber, BigNumberish } from 'ethers'
 import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { FundingCycle } from 'models/funding-cycle'
-import { TerminalName } from 'models/terminal-name'
+import { JuiceboxV1TerminalName } from 'models/v1/terminals'
 import { useCallback, useMemo } from 'react'
 import { deepEqFundingCycles } from 'utils/deepEqFundingCycles'
 
@@ -10,7 +10,7 @@ import useContractReader from './ContractReader'
 /** Returns current funding cycle for project. */
 export default function useCurrentFundingCycleOfProject(
   projectId: BigNumberish | undefined,
-  terminalName: TerminalName | undefined,
+  terminalName: JuiceboxV1TerminalName | undefined,
 ) {
   return useContractReader<FundingCycle>({
     contract: JuiceboxV1ContractName.FundingCycles,

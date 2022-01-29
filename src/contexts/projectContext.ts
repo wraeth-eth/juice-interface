@@ -3,8 +3,8 @@ import { FundingCycle } from 'models/funding-cycle'
 import { PayoutMod, TicketMod } from 'models/mods'
 import { ProjectMetadataV3 } from 'models/project-metadata'
 import { ProjectType } from 'models/project-type'
-import { TerminalName } from 'models/terminal-name'
-import { JuiceboxV1TerminalVersion } from 'models/terminal-version'
+import { JuiceboxV1TerminalName } from 'models/v1/terminals'
+import { JuiceboxV1TerminalVersion } from 'models/v1/terminals'
 import { createContext } from 'react'
 
 export type ProjectContextType = {
@@ -32,7 +32,7 @@ export type ProjectContextType = {
     | {
         version: JuiceboxV1TerminalVersion | undefined
         address: string | undefined
-        name: TerminalName | undefined
+        name: JuiceboxV1TerminalName | undefined
       }
     | undefined
 }

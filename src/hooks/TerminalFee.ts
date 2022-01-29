@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { UserContext } from 'contexts/userContext'
-import { JuiceboxV1TerminalVersion } from 'models/terminal-version'
+import { JuiceboxV1TerminalVersion } from 'models/v1/terminals'
 import { useContext, useEffect, useState } from 'react'
 
 export function useTerminalFee(version?: JuiceboxV1TerminalVersion) {

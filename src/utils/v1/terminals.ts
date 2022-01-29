@@ -1,14 +1,14 @@
 import { JuiceboxV1ContractName } from 'models/v1/contracts'
 import { NetworkName } from 'models/network-name'
-import { JuiceboxV1TerminalVersion } from 'models/terminal-version'
+import { JuiceboxV1TerminalVersion } from 'models/v1/terminals'
 
-import { TerminalName } from 'models/terminal-name'
+import { JuiceboxV1TerminalName } from 'models/v1/terminals'
 
 import { readNetwork } from 'constants/networks'
 
 const loadTerminalAddress = (
   network: NetworkName,
-  terminal: TerminalName,
+  terminal: JuiceboxV1TerminalName,
 ): string =>
   require(`@jbx-protocol/contracts-v1/deployments/${network}/${terminal}.json`)
     .address
@@ -53,7 +53,7 @@ export const getTerminalName = ({
 }: {
   version?: JuiceboxV1TerminalVersion
   address?: string
-}): TerminalName | undefined => {
+}): JuiceboxV1TerminalName | undefined => {
   if (!version && !address) return
 
   const _version =

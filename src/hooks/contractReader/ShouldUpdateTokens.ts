@@ -1,11 +1,11 @@
 import { BigNumber, BigNumberish } from 'ethers'
 import { JuiceboxV1ContractName } from 'models/v1/contracts'
-import { TerminalName } from 'models/terminal-name'
+import { JuiceboxV1TerminalName } from 'models/v1/terminals'
 import { useMemo } from 'react'
 
 export default function useShouldUpdateTokens(
   projectId: BigNumberish | undefined,
-  terminalName: TerminalName | undefined,
+  terminalName: JuiceboxV1TerminalName | undefined,
   userAddress: string | undefined,
 ) {
   const _projectId = projectId
