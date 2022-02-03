@@ -5,6 +5,7 @@ import Search from 'antd/lib/input/Search'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
 import Loading from 'components/shared/Loading'
 import ProjectsGrid from 'components/shared/ProjectsGrid'
+import SwitchNetworkModal from 'components/shared/SwitchNetworkModal'
 
 import { ThemeContext } from 'contexts/themeContext'
 import { useInfiniteProjectsQuery, useProjectsSearch } from 'hooks/Projects'
@@ -284,6 +285,7 @@ export default function Projects() {
         )
       )}
       <FeedbackFormLink />
+      <SwitchNetworkModal />
     </div>
   )
 }

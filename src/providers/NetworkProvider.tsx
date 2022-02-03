@@ -53,6 +53,7 @@ export default function NetworkProvider({
 
   // Initialize Network
   useEffect(() => {
+    console.log('useeffect init network')
     if (onboard) return
 
     const selectWallet = async (newWallet: Wallet) => {

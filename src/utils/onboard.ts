@@ -10,6 +10,7 @@ const dappId = process.env.REACT_APP_BLOCKNATIVE_API_KEY
 
 // TODO(odd-amphora): Add support for Formatic, Portis, etc. if requested.
 export function initOnboard(subscriptions: Subscriptions, darkMode: boolean) {
+  console.log('initing onboard')
   return Onboard({
     dappId,
     hideBranding: true,

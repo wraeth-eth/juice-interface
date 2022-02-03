@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import FeedbackFormLink from 'components/shared/FeedbackFormLink'
+import SwitchNetworkModal from 'components/shared/SwitchNetworkModal'
 
 import { ProjectContext, ProjectContextType } from 'contexts/projectContext'
 import { utils } from 'ethers'
@@ -360,6 +361,7 @@ export default function Dashboard() {
         <h2>
           <Trans>{handle} not found</Trans>
         </h2>
+        <SwitchNetworkModal />
       </div>
     )
   }
