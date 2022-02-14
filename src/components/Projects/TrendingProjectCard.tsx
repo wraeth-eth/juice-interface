@@ -15,7 +15,7 @@ import { getTerminalVersion } from 'utils/v1/terminals'
 import { Link } from 'react-router-dom'
 
 import { SECONDS_IN_DAY } from 'constants/numbers'
-import { CURRENCY_ETH } from 'constants/currency'
+import { CURRENCY_ETH } from 'constants/v1/currency'
 
 export default function TrendingProjectCard({
   project,

@@ -14,7 +14,7 @@ import useSubgraphQuery from 'hooks/SubgraphQuery'
 
 import { Link } from 'react-router-dom'
 
-import { CURRENCY_ETH } from 'constants/currency'
+import { CURRENCY_ETH } from 'constants/v1/currency'
 
 import CurrencySymbol from './CurrencySymbol'
 import Loading from './Loading'
