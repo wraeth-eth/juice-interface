@@ -32,9 +32,6 @@ type TokenFormFields = {
 
 export default function TokenTabContent() {
   const [tokenForm] = useForm<TokenFormFields>()
-  const {
-    theme: { colors },
-  } = useContext(ThemeContext)
   const { theme } = useContext(ThemeContext)
 
   const {
@@ -116,7 +113,7 @@ export default function TokenTabContent() {
   ])
 
   const disableTextStyle: CSSProperties = {
-    color: colors.text.primary,
+    color: theme.colors.text.primary,
     fontStyle: 'italic',
     fontWeight: 500,
     marginBottom: 10,

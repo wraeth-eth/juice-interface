@@ -34,6 +34,8 @@ type FundingFormFields = {
   duration?: string
 }
 
+const formActionsHeight = 70
+
 export default function ProjectDetailsTabContent() {
   const { theme } = useContext(ThemeContext)
   const { contracts } = useContext(V2UserContext)
@@ -126,7 +128,7 @@ export default function ProjectDetailsTabContent() {
   const isFundingDurationVisible = fundingType === 'recurring'
 
   return (
-    <Row gutter={32}>
+    <Row gutter={32} style={{ marginBottom: formActionsHeight }}>
       <Col span={12}>
         <Form form={fundingForm} layout="vertical" onFinish={onFundingFormSave}>
           <Form.Item label={t`How much do you want to raise?`}>
@@ -252,9 +254,24 @@ export default function ProjectDetailsTabContent() {
           </div>
 
           <Form.Item>
-            <Button htmlType="submit" type="primary">
-              <Trans>Save funding details</Trans>
-            </Button>
+            <div
+              style={{
+                position: 'fixed',
+                bottom: '0',
+                left: '0',
+                width: '100vw',
+                paddingLeft: '4rem',
+                backgroundColor: theme.colors.background.l0,
+                height: formActionsHeight,
+                display: 'flex',
+                alignItems: 'center',
+                boxShadow: '0 -10px 12px rgb(0 0 0 / 5%)',
+              }}
+            >
+              <Button htmlType="submit" type="primary">
+                <Trans>Save funding details</Trans>
+              </Button>
+            </div>
           </Form.Item>
         </Form>
       </Col>
