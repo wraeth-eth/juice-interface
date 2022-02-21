@@ -69,7 +69,7 @@ export default function ProjectBondingCurveRate({
         }),
       )
     } catch (e) {
-      console.log('Error setting calculator', e)
+      console.error('Error setting calculator', e)
     }
   }, [])
 

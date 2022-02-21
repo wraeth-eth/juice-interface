@@ -37,7 +37,7 @@ export function useV1ContractLoader() {
 
         setContracts(newContracts)
       } catch (e) {
-        console.log('CONTRACT LOADER ERROR:', e)
+        console.error('CONTRACT LOADER ERROR:', e)
       }
     }
 
