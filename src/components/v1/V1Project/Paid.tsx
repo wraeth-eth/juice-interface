@@ -115,6 +115,10 @@ export default function Paid() {
     readNetwork.name === NetworkName.mainnet &&
     projectId?.eq(V1_PROJECT_IDS.CONSTITUTION_DAO)
 
+  const isJohnnyDAO =
+    readNetwork.name === NetworkName.mainnet &&
+    projectId?.eq(V1_PROJECT_IDS.JOHNNY_DAO)
+
   return (
     <div>
       <div
@@ -128,11 +132,15 @@ export default function Paid() {
         <span style={secondaryTextStyle}>
           <TooltipLabel
             label={t`Volume`}
-            tip={t`The total amount received by this project through Juicebox since it was created.`}
+            tip={
+              !isJohnnyDAO
+                ? t`The total amount received by this project through Juicebox since it was created.`
+                : t`The total amount received by this project through Juicebox since 15 Feb 2022.`
+            }
           />
         </span>
         <span style={primaryTextStyle}>
-          {isConstitutionDAO && (
+          {(isConstitutionDAO || isJohnnyDAO) && (
             <span style={secondaryTextStyle}>
               <CurrencySymbol currency={V1_CURRENCY_USD} />
               {formatWad(converter.wadToCurrency(earned, 1, 0), {
@@ -153,41 +161,42 @@ export default function Paid() {
         </span>
       </div>
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-          flexWrap: 'nowrap',
-        }}
-      >
-        <div style={secondaryTextStyle}>
-          <TooltipLabel
-            label={t`In Juicebox`}
-            tip={t`The balance of this project in the Juicebox contract.`}
-          />
-        </div>
-
+      {!isJohnnyDAO && (
         <div
           style={{
-            ...primaryTextStyle,
-            color: isConstitutionDAO
-              ? colors.text.primary
-              : colors.text.brand.primary,
-            marginLeft: 10,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            flexWrap: 'nowrap',
           }}
         >
-          {currentFC.currency.eq(V1_CURRENCY_USD) ? (
-            <span style={secondaryTextStyle}>
-              <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}
-            </span>
-          ) : (
-            ''
-          )}
-          {formatCurrencyAmount(balanceInCurrency)}
-        </div>
-      </div>
+          <div style={secondaryTextStyle}>
+            <TooltipLabel
+              label={t`In Juicebox`}
+              tip={t`The balance of this project in the Juicebox contract.`}
+            />
+          </div>
 
+          <div
+            style={{
+              ...primaryTextStyle,
+              color: isConstitutionDAO
+                ? colors.text.primary
+                : colors.text.brand.primary,
+              marginLeft: 10,
+            }}
+          >
+            {currentFC.currency.eq(V1_CURRENCY_USD) ? (
+              <span style={secondaryTextStyle}>
+                <ETHAmount amount={balance} precision={2} padEnd={true} />{' '}
+              </span>
+            ) : (
+              ''
+            )}
+            {formatCurrencyAmount(balanceInCurrency)}
+          </div>
+        </div>
+      )}
       {hasFundingTarget(currentFC) &&
         (currentFC.target.gt(0) ? (
           <div
@@ -270,57 +279,61 @@ export default function Paid() {
           />
         ))}
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'baseline',
-          marginTop: spacing,
-        }}
-      >
-        <span style={secondaryTextStyle}>
-          <TooltipLabel
-            label={t`In wallet`}
-            tip={
-              <div>
-                <p>
-                  <Trans>
-                    The balance of the wallet that owns this Juicebox project.
-                  </Trans>
-                </p>{' '}
-                <EtherscanLink value={owner} type="address" />
-              </div>
-            }
-          />
-        </span>
-        <span>
-          <span style={secondaryTextStyle}>
-            <ProjectTokenBalance
-              style={{ display: 'inline-block' }}
-              wallet={owner}
-              projectId={BigNumber.from('0x01')}
-              hideHandle
-            />{' '}
-            +{' '}
-          </span>
-          <span style={primaryTextStyle}>
-            <ETHAmount amount={ownerBalance} precision={2} padEnd={true} />
-          </span>
-        </span>
-      </div>
-
-      <div
-        style={{
-          textAlign: 'right',
-        }}
-      >
-        <span
-          style={{ ...secondaryTextStyle, cursor: 'pointer' }}
-          onClick={() => setBalancesModalVisible(true)}
-        >
-          <Trans>All assets</Trans> <RightCircleOutlined />
-        </span>
-      </div>
+      {!isJohnnyDAO && (
+        <>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              marginTop: spacing,
+            }}
+          >
+            <span style={secondaryTextStyle}>
+              <TooltipLabel
+                label={t`In wallet`}
+                tip={
+                  <div>
+                    <p>
+                      <Trans>
+                        The balance of the wallet that owns this Juicebox
+                        project.
+                      </Trans>
+                    </p>{' '}
+                    <EtherscanLink value={owner} type="address" />
+                  </div>
+                }
+              />
+            </span>
+            <span>
+              <span style={secondaryTextStyle}>
+                <ProjectTokenBalance
+                  style={{ display: 'inline-block' }}
+                  wallet={owner}
+                  projectId={BigNumber.from('0x01')}
+                  hideHandle
+                />{' '}
+                +{' '}
+              </span>
+              <span style={primaryTextStyle}>
+                <ETHAmount amount={ownerBalance} precision={2} padEnd={true} />
+              </span>
+            </span>
+          </div>
+          <div
+            style={{
+              textAlign: 'right',
+            }}
+          >
+            <span
+              style={{ ...secondaryTextStyle, cursor: 'pointer' }}
+              onClick={() => setBalancesModalVisible(true)}
+            >
+              <Trans>All assets</Trans> <RightCircleOutlined />
+            </span>
+          </div>
+        </>
+      )}
 
       <BalancesModal
         visible={balancesModalVisible}
