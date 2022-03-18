@@ -15,6 +15,14 @@ import { useETHPaymentTerminalBalance } from 'hooks/v2/contractReader/ETHPayment
 
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 
+import { useMemo } from 'react'
+
+import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
+
+import { useDistributionLimitCurrency } from 'hooks/v2/contractReader/DistributionLimitCurrency'
+
+import { V2CurrencyOption } from 'models/v2/currencyOption'
+
 import { layouts } from 'constants/styles/layouts'
 
 import V2Project from '../V2Project'
@@ -65,6 +73,23 @@ export default function V2Dashboard() {
     projectId,
   })
 
+  const converter = useCurrencyConverter()
+
+  const { data: distributionLimitCurrency } = useDistributionLimitCurrency({
+    projectId,
+  })
+
+  const balanceInDistributionLimitCurrency = useMemo(
+    () =>
+      ETHBalance &&
+      converter.wadToCurrency(
+        ETHBalance,
+        distributionLimitCurrency.toNumber() as V2CurrencyOption,
+        0,
+      ),
+    [ETHBalance, converter, distributionLimitCurrency],
+  )
+
   if (metadataLoading || metadataURILoading) return <Loading />
 
   if (projectId?.eq(0) || metadataError || !metadataCID) {
@@ -80,6 +105,8 @@ export default function V2Dashboard() {
     tokenAddress,
     terminals,
     ETHBalance,
+    distributionLimitCurrency,
+    balanceInDistributionLimitCurrency,
   }
 
   return (

@@ -9,12 +9,16 @@ import { CurrencyOption } from 'models/currencyOption'
 
 import { CurrencyMetadata } from 'constants/currency'
 
+export type ETHCurrencyName = 'currencyETH'
+export type USDCurrencyName = 'currencyUSD'
+export type CurrencyName = ETHCurrencyName | USDCurrencyName
+
 // TODO make this CurrencyOption instead of number
 export type CurrencyMetadataType = Record<number, CurrencyMetadata>
 
 export type CurrencyContextType = {
   currencyMetadata: CurrencyMetadataType
-  currencies: Record<string, CurrencyOption>
+  currencies: Record<CurrencyName, CurrencyOption>
 }
 
 // Defaults to V2

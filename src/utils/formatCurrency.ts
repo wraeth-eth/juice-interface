@@ -1,5 +1,8 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+
 import { V1CurrencyOption } from 'models/v1/currencyOption'
+
+import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
 
 import { parseWad } from './formatNumber'
 
@@ -58,8 +61,9 @@ export class CurrencyUtils {
   ) => {
     if (targetCurrency === undefined || sourceCurrency === undefined) return
     if (targetCurrency === sourceCurrency) return BigNumber.from(amount)
-    if (targetCurrency === 1) return parseWad(this.weiToUsd(amount)?.toString())
-    if (targetCurrency === 0 && this.usdPerEth !== undefined)
+    if (targetCurrency === V1_CURRENCY_USD)
+      return parseWad(this.weiToUsd(amount)?.toString())
+    if (targetCurrency === V1_CURRENCY_ETH && this.usdPerEth !== undefined)
       return BigNumber.from(amount)
         .div(this.usdPerEth * 100)
         .mul(100)
