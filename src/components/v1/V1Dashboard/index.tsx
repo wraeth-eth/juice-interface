@@ -40,7 +40,7 @@ import { archivedProjectIds } from 'constants/v1/archivedProjects'
 
 import Loading from '../../shared/Loading'
 import V1Project from '../V1Project'
-import { V1_CURRENCY_CONTEXT } from 'constants/v1/currency'
+import { V1_CURRENCY_CONTEXT, V1_CURRENCY_ETH } from 'constants/v1/currency'
 
 export default function V1Dashboard() {
   const { handle }: { handle?: string } = useParams()
@@ -87,8 +87,10 @@ export default function V1Dashboard() {
       balance &&
       converter.wadToCurrency(
         balance,
-        currentFC?.currency.toNumber() as V1CurrencyOption,
-        0,
+        (currentFC?.currency.toNumber() as V1CurrencyOption) === V1_CURRENCY_ETH
+          ? 'ETH'
+          : 'USD',
+        'ETH',
       ),
     [balance, converter, currentFC],
   )

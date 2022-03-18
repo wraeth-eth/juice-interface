@@ -15,13 +15,17 @@ import { useETHPaymentTerminalBalance } from 'hooks/v2/contractReader/ETHPayment
 
 import useProjectToken from 'hooks/v2/contractReader/ProjectToken'
 
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 
 import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 
 import { useDistributionLimitCurrency } from 'hooks/v2/contractReader/DistributionLimitCurrency'
 
 import { V2CurrencyOption } from 'models/v2/currencyOption'
+
+import { V2_CURRENCY_ETH } from 'utils/v2/currency'
+
+import { V2UserContext } from 'contexts/v2/userContext'
 
 import { layouts } from 'constants/styles/layouts'
 
@@ -35,6 +39,7 @@ import {
 export default function V2Dashboard() {
   const { projectId: projectIdParameter }: { projectId?: string } = useParams()
   const projectId = BigNumber.from(projectIdParameter)
+  const { contracts } = useContext(V2UserContext)
 
   const { data: metadataCID, loading: metadataURILoading } =
     useProjectMetadataContent(projectId)
@@ -77,6 +82,8 @@ export default function V2Dashboard() {
 
   const { data: distributionLimitCurrency } = useDistributionLimitCurrency({
     projectId,
+    fundingCycleConfiguration: fundingCycle?.configuration,
+    terminal: contracts?.JBETHPaymentTerminal.address,
   })
 
   const balanceInDistributionLimitCurrency = useMemo(
@@ -84,8 +91,11 @@ export default function V2Dashboard() {
       ETHBalance &&
       converter.wadToCurrency(
         ETHBalance,
-        distributionLimitCurrency.toNumber() as V2CurrencyOption,
-        0,
+        (distributionLimitCurrency?.toNumber() as V2CurrencyOption) ===
+          V2_CURRENCY_ETH
+          ? 'ETH'
+          : 'USD',
+        'ETH',
       ),
     [ETHBalance, converter, distributionLimitCurrency],
   )

@@ -11,6 +11,7 @@ import { weightedAmount } from 'utils/math'
 
 import V2PayButton from './V2PayButton'
 import V2ProjectHeaderActions from '../V2ProjectHeaderActions'
+import TreasuryStats from './TreasuryStats'
 
 export default function V2Project() {
   const {
@@ -19,7 +20,6 @@ export default function V2Project() {
     fundingCycle,
     payoutSplits,
     reserveTokenSplits,
-    ETHBalance,
   } = useContext(V2ProjectContext)
 
   if (!projectId) return null
@@ -53,9 +53,9 @@ export default function V2Project() {
         metadata={projectMetadata}
         actions={<V2ProjectHeaderActions />}
       />
-      <Row>
+      <Row gutter={40}>
         <Col md={12} xs={24}>
-          <h2>In Juicebox: Ξ{fromWad(ETHBalance)}</h2>
+          <TreasuryStats />
 
           {fundingCycle && (
             <div>

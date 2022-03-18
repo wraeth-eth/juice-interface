@@ -1,10 +1,7 @@
 import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
 
-import { V1CurrencyOption } from 'models/v1/currencyOption'
-
-import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
-
 import { parseWad } from './formatNumber'
+import { CurrencyName } from 'constants/currency'
 
 export class CurrencyUtils {
   // Define non-fractional conversion units
@@ -56,14 +53,14 @@ export class CurrencyUtils {
 
   wadToCurrency = (
     amount: BigNumberish | undefined,
-    targetCurrency: V1CurrencyOption | undefined,
-    sourceCurrency: V1CurrencyOption | undefined,
+    targetCurrency: CurrencyName | undefined,
+    sourceCurrency: CurrencyName | undefined,
   ) => {
     if (targetCurrency === undefined || sourceCurrency === undefined) return
     if (targetCurrency === sourceCurrency) return BigNumber.from(amount)
-    if (targetCurrency === V1_CURRENCY_USD)
+    if (targetCurrency === 'USD')
       return parseWad(this.weiToUsd(amount)?.toString())
-    if (targetCurrency === V1_CURRENCY_ETH && this.usdPerEth !== undefined)
+    if (targetCurrency === 'ETH' && this.usdPerEth !== undefined)
       return BigNumber.from(amount)
         .div(this.usdPerEth * 100)
         .mul(100)

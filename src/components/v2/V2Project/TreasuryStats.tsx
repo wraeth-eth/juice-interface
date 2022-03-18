@@ -10,14 +10,12 @@ import { CSSProperties, useContext } from 'react'
 import { formatWad, fromWad } from 'utils/formatNumber'
 import { V2_CURRENCY_ETH, V2_CURRENCY_USD } from 'utils/v2/currency'
 import { V2ProjectContext } from 'contexts/v2/projectContext'
-import { useDistributionLimitCurrency } from 'hooks/v2/contractReader/DistributionLimitCurrency'
 
 export default function TreasuryStats() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
   const {
-    projectId,
     ETHBalance,
     balanceInDistributionLimitCurrency,
     distributionLimitCurrency,
@@ -46,7 +44,7 @@ export default function TreasuryStats() {
         <Tooltip
           title={
             <span>
-              {/* <CurrencySymbol currency={V2_CURRENCY_ETH} /> */}
+              <CurrencySymbol currency={V2_CURRENCY_ETH} />
               {formatWad(converter.usdToWei(fromWad(amt)), {
                 precision: 2,
                 padEnd: true,
@@ -54,13 +52,13 @@ export default function TreasuryStats() {
             </span>
           }
         >
-          {/* <CurrencySymbol currency={V2_CURRENCY_USD} /> */}
+          <CurrencySymbol currency={V2_CURRENCY_USD} />
           {formatWad(amt, { precision: 2, padEnd: true })}
         </Tooltip>
       </span>
     ) : (
       <span>
-        {/* <CurrencySymbol currency={V2_CURRENCY_ETH} /> */}
+        <CurrencySymbol currency={V2_CURRENCY_ETH} />
         {formatWad(amt, { precision: 2, padEnd: true })}
       </span>
     )

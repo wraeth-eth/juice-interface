@@ -1,6 +1,6 @@
 import { RightCircleOutlined } from '@ant-design/icons'
 import { BigNumber } from '@ethersproject/bignumber'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Progress, Tooltip } from 'antd'
 import CurrencySymbol from 'components/shared/CurrencySymbol'
 import EtherscanLink from 'components/shared/EtherscanLink'
@@ -45,8 +45,10 @@ export default function Paid() {
   const converter = useCurrencyConverter()
   const overflowInCurrency = converter.wadToCurrency(
     overflow ?? 0,
-    currentFC?.currency.toNumber() as V1CurrencyOption,
-    0,
+    (currentFC?.currency.toNumber() as V1CurrencyOption) === V1_CURRENCY_ETH
+      ? 'ETH'
+      : 'USD',
+    'ETH',
   )
 
   const { data: ownerBalance } = useEthBalanceQuery(owner)
@@ -131,7 +133,7 @@ export default function Paid() {
             {isConstitutionDAO && (
               <span style={secondaryTextStyle}>
                 <CurrencySymbol currency={V1_CURRENCY_USD} />
-                {formatWad(converter.wadToCurrency(earned, 1, 0), {
+                {formatWad(converter.wadToCurrency(earned, 'USD', 'ETH'), {
                   precision: 2,
                   padEnd: true,
                 })}{' '}
