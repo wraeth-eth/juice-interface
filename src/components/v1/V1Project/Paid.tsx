@@ -20,6 +20,8 @@ import { hasFundingTarget } from 'utils/v1/fundingCycle'
 
 import StatLine from 'components/shared/Project/StatLine'
 
+import { CurrencyContext } from 'contexts/currencyContext'
+
 import { V1_PROJECT_IDS } from 'constants/v1/projectIds'
 import { readNetwork } from 'constants/networks'
 import { V1_CURRENCY_ETH, V1_CURRENCY_USD } from 'constants/v1/currency'
@@ -31,6 +33,7 @@ export default function Paid() {
   const {
     theme: { colors },
   } = useContext(ThemeContext)
+  const { currencyMetadata } = useContext(CurrencyContext)
 
   const {
     projectId,
@@ -45,9 +48,7 @@ export default function Paid() {
   const converter = useCurrencyConverter()
   const overflowInCurrency = converter.wadToCurrency(
     overflow ?? 0,
-    (currentFC?.currency.toNumber() as V1CurrencyOption) === V1_CURRENCY_ETH
-      ? 'ETH'
-      : 'USD',
+    currencyMetadata[currentFC?.currency.toNumber() as V1CurrencyOption].name,
     'ETH',
   )
 

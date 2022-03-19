@@ -24,7 +24,7 @@ import { useCurrencyConverter } from 'hooks/v1/CurrencyConverter'
 import { useProjectMetadata } from 'hooks/ProjectMetadata'
 import { useProjectsQuery } from 'hooks/v1/Projects'
 import { V1CurrencyOption } from 'models/v1/currencyOption'
-import { useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { getTerminalName, getTerminalVersion } from 'utils/v1/terminals'
 import useTerminalOfProject from 'hooks/v1/contractReader/TerminalOfProject'
@@ -40,7 +40,7 @@ import { archivedProjectIds } from 'constants/v1/archivedProjects'
 
 import Loading from '../../shared/Loading'
 import V1Project from '../V1Project'
-import { V1_CURRENCY_CONTEXT, V1_CURRENCY_ETH } from 'constants/v1/currency'
+import { V1_CURRENCY_CONTEXT } from 'constants/v1/currency'
 
 export default function V1Dashboard() {
   const { handle }: { handle?: string } = useParams()
@@ -82,17 +82,17 @@ export default function V1Dashboard() {
   const tokenSymbol = useSymbolOfERC20(tokenAddress)
   const balance = useBalanceOfProject(projectId, terminalName)
   const converter = useCurrencyConverter()
+  const { currencyMetadata } = useContext(CurrencyContext)
   const balanceInCurrency = useMemo(
     () =>
       balance &&
       converter.wadToCurrency(
         balance,
-        (currentFC?.currency.toNumber() as V1CurrencyOption) === V1_CURRENCY_ETH
-          ? 'ETH'
-          : 'USD',
+        currencyMetadata[currentFC?.currency.toNumber() as V1CurrencyOption]
+          .name,
         'ETH',
       ),
-    [balance, converter, currentFC],
+    [balance, converter, currentFC, currencyMetadata],
   )
   const overflow = useOverflowOfProject(projectId, terminalName)
   const uri = useUriOfProject(projectId)
