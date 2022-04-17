@@ -11,7 +11,7 @@ export default function useTerminalCurrentOverflow({
   projectId?: BigNumber
 }) {
   return useV2ContractReader<BigNumber>({
-    contract: V2ContractName.JBSingleTokenPaymentTerminalStore,
+    contract: V2ContractName.JBPaymentTerminalStore,
     functionName: 'currentOverflowOf',
     args: terminal && projectId ? [terminal, projectId.toHexString()] : null,
   })

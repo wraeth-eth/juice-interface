@@ -11,7 +11,7 @@ export function usePaymentTerminalBalance({
   projectId: BigNumber | undefined
 }) {
   return useV2ContractReader<BigNumber>({
-    contract: V2ContractName.JBSingleTokenPaymentTerminalStore,
+    contract: V2ContractName.JBPaymentTerminalStore,
     functionName: 'balanceOf',
     args: terminal && projectId ? [terminal, projectId] : null,
   })
